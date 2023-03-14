@@ -6,7 +6,15 @@ it('should throw an error if no Authorization header is present', () => {
     get: () => null
   }
 
-  expect(isAuthMiddleware.bind(this, req, {}, () => null)).to.throw(
+  expect(isAuthMiddleware.bind(this, req, {}, () => {})).to.throw(
     'Not authenticated.'
   )
+})
+
+it('should throw an error if the Authorization header is only one string', () => {
+  const req = {
+    get: () => 'Authorization'
+  }
+
+  expect(isAuthMiddleware.bind(this, req, {}, () => {})).to.throw()
 })
