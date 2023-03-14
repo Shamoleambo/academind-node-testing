@@ -11,10 +11,16 @@ describe('Auth middleware', () => {
       'Not authenticated.'
     )
   })
-
   it('should throw an error if the Authorization header is only one string', () => {
     const req = {
-      get: () => 'Authorization'
+      get: () => 'Bearer'
+    }
+
+    expect(isAuthMiddleware.bind(this, req, {}, () => {})).to.throw()
+  })
+  it("should throw an error if the provided token couldn't be verified", () => {
+    const req = {
+      get: () => 'Bearer token'
     }
 
     expect(isAuthMiddleware.bind(this, req, {}, () => {})).to.throw()
